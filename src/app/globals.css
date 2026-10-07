@@ -1,0 +1,628 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   AURELIA — Design System foundation
+   ───────────────────────────────────────────────────────────────────────────
+   Token architecture
+     1. Primitives   — raw brand values (never referenced by components)
+     2. Semantics    — role-based tokens (--surface, --text-body, …)
+     3. Components   — shadow/gradient scales
+   Every token exists in both light and dark. Components only ever consume
+   layer 2/3, which is what makes the dark theme a pure token swap.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────── 1. PRIMITIVES ─────────────────────────────── */
+
+:root {
+  /* Brand */
+  --brand-navy: #0f1b2d;
+  --brand-navy-600: #16273f;
+  --brand-navy-700: #1d3252;
+  --brand-gold: #c9a24b;
+  --brand-gold-300: #e2c88a;
+  --brand-gold-600: #a8842f;
+  --brand-ivory: #faf8f4;
+  --brand-ivory-200: #f3efe7;
+  --brand-ivory-300: #eae4d8;
+  --brand-charcoal: #1c1c1e;
+  --brand-slate: #5b6270;
+
+  /* Semantic ramps */
+  --brand-success: #3f7d58;
+  --brand-success-soft: #eaf3ed;
+  --brand-warning: #b3801f;
+  --brand-warning-soft: #fbf2e0;
+  --brand-danger: #a13c3c;
+  --brand-danger-soft: #fbeceb;
+  --brand-info: #35597f;
+  --brand-info-soft: #eaf0f7;
+
+  /* Chart palette — brand-consistent, colour-blind aware on light bg */
+  --palette-1: #0f1b2d; /* midnight   */
+  --palette-2: #c9a24b; /* champagne  */
+  --palette-3: #5b7c99; /* slate blue */
+  --palette-4: #7d8f72; /* sage       */
+  --palette-5: #a8746a; /* terracotta */
+
+  /* Elevation — warm-tinted, never neutral grey */
+  --shadow-xs: 0 1px 2px 0 rgb(15 27 45 / 0.04), 0 1px 1px -1px rgb(15 27 45 / 0.03);
+  --shadow-sm: 0 1px 3px 0 rgb(15 27 45 / 0.05), 0 1px 2px -1px rgb(15 27 45 / 0.04);
+  --shadow-md: 0 2px 4px -1px rgb(15 27 45 / 0.05), 0 6px 16px -4px rgb(15 27 45 / 0.08);
+  --shadow-lg: 0 4px 8px -2px rgb(15 27 45 / 0.06), 0 16px 32px -8px rgb(15 27 45 / 0.1);
+  --shadow-xl: 0 8px 16px -4px rgb(15 27 45 / 0.08), 0 28px 56px -12px rgb(15 27 45 / 0.14);
+  --shadow-2xl: 0 12px 24px -6px rgb(15 27 45 / 0.1), 0 44px 88px -20px rgb(15 27 45 / 0.18);
+  --shadow-inner: inset 0 1px 2px 0 rgb(15 27 45 / 0.05);
+  --shadow-gold: 0 6px 20px -6px rgb(201 162 75 / 0.42);
+  --shadow-lift: 0 18px 40px -14px rgb(15 27 45 / 0.22), 0 4px 10px -4px rgb(15 27 45 / 0.1);
+  --shadow-nav: 0 1px 0 0 hsl(var(--line) / 1), 0 8px 24px -18px rgb(15 27 45 / 0.3);
+  --shadow-focus: 0 0 0 4px rgb(201 162 75 / 0.16);
+
+  --gradient-ivory: linear-gradient(180deg, hsl(40 46% 97%) 0%, hsl(40 40% 95%) 100%);
+  --gradient-navy: linear-gradient(160deg, #0f1b2d 0%, #16273f 55%, #1d3252 100%);
+  --gradient-gold: linear-gradient(120deg, #c9a24b 0%, #e2c88a 50%, #c9a24b 100%);
+  --gradient-shimmer: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgb(255 255 255 / 0.42) 50%,
+    transparent 100%
+  );
+
+  /* Layout */
+  --nav-height: 4.5rem;
+  --nav-height-scrolled: 4rem;
+  --mobile-nav-height: 4.25rem;
+}
+
+/* ────────────────────────── 2. SEMANTICS — LIGHT ───────────────────────── */
+
+:root {
+  --background: 40 46% 97%; /* #FAF8F4 warm ivory */
+  --foreground: 240 3% 11%; /* #1C1C1E charcoal */
+
+  --surface: 0 0% 100%;
+  --surface-raised: 40 33% 98%;
+  --surface-sunken: 40 30% 95%;
+  --surface-inverse: 216 45% 15%;
+
+  --text-heading: 240 3% 11%;
+  --text-body: 220 7% 40%; /* #5B6270 slate */
+  --text-subtle: 218 8% 52%;
+  --text-inverted: 40 40% 96%;
+
+  --primary: 216 67% 12%; /* #0F1B2D midnight navy */
+  --primary-foreground: 40 40% 97%;
+  --primary-soft: 214 38% 94%;
+  --primary-muted: 216 20% 32%;
+
+  --accent: 41 54% 54%; /* #C9A24B champagne gold */
+  --accent-foreground: 216 67% 12%;
+  --accent-soft: 41 62% 93%;
+  --accent-muted: 41 42% 40%;
+
+  --secondary: 40 30% 95%;
+  --secondary-foreground: 216 67% 12%;
+
+  --muted: 40 28% 95%;
+  --muted-foreground: 218 8% 46%;
+
+  --border: 40 18% 89%;
+  --line: 40 18% 89%; /* hairline */
+  --line-strong: 40 14% 82%;
+  --input: 40 18% 87%;
+  --ring: 41 54% 54%;
+
+  --success: 141 33% 37%;
+  --success-foreground: 0 0% 100%;
+  --success-soft: 133 38% 94%;
+
+  --warning: 40 71% 41%;
+  --warning-foreground: 0 0% 100%;
+  --warning-soft: 41 76% 94%;
+
+  --danger: 0 32% 43%;
+  --danger-foreground: 0 0% 100%;
+  --danger-soft: 4 62% 95%;
+
+  --info: 210 45% 35%;
+  --info-foreground: 0 0% 100%;
+  --info-soft: 212 45% 94%;
+
+  --chart-1: 216 67% 12%;
+  --chart-2: 41 54% 54%;
+  --chart-3: 208 25% 45%;
+  --chart-4: 100 12% 50%;
+  --chart-5: 13 27% 54%;
+  --chart-grid: 40 18% 89%;
+}
+
+/* ────────────────────────── 2b. SEMANTICS — DARK ───────────────────────── */
+
+.dark {
+  --background: 216 34% 8%;
+  --foreground: 40 24% 94%;
+
+  --surface: 216 32% 11%;
+  --surface-raised: 216 30% 14%;
+  --surface-sunken: 216 36% 7%;
+  --surface-inverse: 40 40% 96%;
+
+  --text-heading: 40 26% 95%;
+  --text-body: 216 14% 71%;
+  --text-subtle: 216 11% 58%;
+  --text-inverted: 216 67% 12%;
+
+  --primary: 40 40% 96%;
+  --primary-foreground: 216 67% 12%;
+  --primary-soft: 216 26% 18%;
+  --primary-muted: 216 14% 68%;
+
+  --accent: 41 58% 58%;
+  --accent-foreground: 216 67% 10%;
+  --accent-soft: 216 24% 18%;
+  --accent-muted: 41 48% 66%;
+
+  --secondary: 216 26% 17%;
+  --secondary-foreground: 40 26% 95%;
+
+  --muted: 216 26% 16%;
+  --muted-foreground: 216 13% 65%;
+
+  --border: 216 22% 21%;
+  --line: 216 22% 21%;
+  --line-strong: 216 20% 28%;
+  --input: 216 22% 24%;
+  --ring: 41 58% 58%;
+
+  --success: 141 34% 55%;
+  --success-foreground: 216 67% 10%;
+  --success-soft: 141 26% 16%;
+
+  --warning: 40 70% 60%;
+  --warning-foreground: 216 67% 10%;
+  --warning-soft: 40 30% 16%;
+
+  --danger: 4 62% 65%;
+  --danger-foreground: 216 67% 10%;
+  --danger-soft: 4 30% 17%;
+
+  --info: 210 55% 66%;
+  --info-foreground: 216 67% 10%;
+  --info-soft: 210 30% 17%;
+
+  --chart-1: 41 58% 62%;
+  --chart-2: 208 30% 62%;
+  --chart-3: 141 30% 55%;
+  --chart-4: 13 38% 62%;
+  --chart-5: 216 30% 72%;
+  --chart-grid: 216 22% 21%;
+
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.36), 0 1px 2px -1px rgb(0 0 0 / 0.3);
+  --shadow-md: 0 2px 4px -1px rgb(0 0 0 / 0.4), 0 6px 16px -4px rgb(0 0 0 / 0.44);
+  --shadow-lg: 0 4px 8px -2px rgb(0 0 0 / 0.44), 0 16px 32px -8px rgb(0 0 0 / 0.5);
+  --shadow-xl: 0 8px 16px -4px rgb(0 0 0 / 0.48), 0 28px 56px -12px rgb(0 0 0 / 0.56);
+  --shadow-2xl: 0 12px 24px -6px rgb(0 0 0 / 0.52), 0 44px 88px -20px rgb(0 0 0 / 0.62);
+  --shadow-inner: inset 0 1px 2px 0 rgb(0 0 0 / 0.4);
+  --shadow-gold: 0 6px 20px -6px rgb(201 162 75 / 0.36);
+  --shadow-lift: 0 18px 40px -14px rgb(0 0 0 / 0.6), 0 4px 10px -4px rgb(0 0 0 / 0.4);
+  --shadow-nav: 0 1px 0 0 hsl(var(--line) / 1), 0 8px 24px -18px rgb(0 0 0 / 0.7);
+  --shadow-focus: 0 0 0 4px rgb(201 162 75 / 0.22);
+
+  --gradient-ivory: linear-gradient(180deg, hsl(216 34% 8%) 0%, hsl(216 38% 6%) 100%);
+  --gradient-shimmer: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgb(255 255 255 / 0.07) 50%,
+    transparent 100%
+  );
+}
+
+/* ─────────────────────────────── BASE ──────────────────────────────────── */
+
+@layer base {
+  * {
+    @apply border-line;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--nav-height) + 1.5rem);
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-background text-body antialiased;
+    font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    letter-spacing: -0.003em;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11", "ss01";
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100dvh;
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display text-heading;
+    font-weight: 500;
+    letter-spacing: -0.022em;
+    text-wrap: balance;
+  }
+
+  h5,
+  h6 {
+    @apply font-display text-heading;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: rgb(201 162 75 / 0.24);
+    color: hsl(var(--text-heading));
+  }
+
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+    border-radius: 3px;
+  }
+
+  /* Hairline rules read better than 2px borders at this scale */
+  hr {
+    @apply border-line;
+  }
+
+  /* Scrollbars — slim, brand-tinted */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--line-strong)) transparent;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--line-strong));
+    border-radius: 9999px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.55);
+    background-clip: content-box;
+  }
+
+  input,
+  textarea,
+  select,
+  button {
+    font: inherit;
+    letter-spacing: inherit;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    @apply text-subtle;
+  }
+
+  /* Kill Chrome's yellow autofill wash; we style it explicitly */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus {
+    -webkit-text-fill-color: hsl(var(--foreground));
+    -webkit-box-shadow: 0 0 0 1000px hsl(var(--surface)) inset;
+    caret-color: hsl(var(--foreground));
+    transition: background-color 9999s ease-out;
+  }
+
+  [type="search"]::-webkit-search-decoration,
+  [type="search"]::-webkit-search-cancel-button,
+  [type="search"]::-webkit-search-results-button,
+  [type="search"]::-webkit-search-results-decoration {
+    -webkit-appearance: none;
+  }
+
+  dialog::-webkit-backdrop {
+    background: rgb(15 27 45 / 0.5);
+  }
+}
+
+/* ──────────────────────────── COMPONENTS ───────────────────────────────── */
+
+@layer components {
+  /* ── Layout rhythm ─────────────────────────────────────────────────── */
+  .container-page {
+    @apply mx-auto w-full max-w-container px-5 sm:px-6 lg:px-8;
+  }
+
+  .section {
+    @apply py-18 md:py-22 lg:py-section;
+  }
+
+  .section-lg {
+    @apply py-22 lg:py-section-lg;
+  }
+
+  .section-tight {
+    @apply py-13 md:py-15;
+  }
+
+  /* ── Eyebrow: the recurring "small gold label" motif ──────────────── */
+  .eyebrow {
+    @apply inline-flex items-center gap-2.5 text-2xs font-medium uppercase tracking-[0.18em] text-accent-muted;
+  }
+
+  .eyebrow-rule {
+    @apply h-px w-8 bg-accent/45;
+  }
+
+  /* ── Display headline helpers ─────────────────────────────────────── */
+  .text-display {
+    @apply font-display text-heading;
+    letter-spacing: -0.03em;
+    line-height: 1.04;
+  }
+
+  .text-overline {
+    @apply text-2xs font-medium uppercase tracking-[0.16em] text-subtle;
+  }
+
+  /* ── Measure: guard long-form copy at ~70 characters ──────────────── */
+  .measure {
+    max-width: 68ch;
+  }
+
+  /* ── Glass surface (hero search, sticky booking card) ────────────── */
+  .glass {
+    background: rgb(255 255 255 / 0.72);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgb(255 255 255 / 0.5);
+    box-shadow: var(--shadow-xl);
+  }
+
+  .dark .glass {
+    background: hsl(216 32% 11% / 0.72);
+    border-color: hsl(var(--line) / 0.7);
+  }
+
+  .glass-dark {
+    background: rgb(15 27 45 / 0.55);
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    border: 1px solid rgb(255 255 255 / 0.12);
+  }
+
+  /* ── Hairline card ────────────────────────────────────────────────── */
+  .card-hairline {
+    @apply rounded-2xl border border-line bg-surface;
+  }
+
+  /* ── Interactive: press feedback + focus ring ─────────────────────── */
+  .pressable {
+    @apply transition-transform duration-150 ease-swift;
+  }
+
+  .pressable:active {
+    transform: scale(0.985);
+  }
+
+  /* ── Gold hairline used on premium panels ─────────────────────────── */
+  .ring-gold-hairline {
+    box-shadow:
+      inset 0 0 0 1px rgb(201 162 75 / 0.28),
+      var(--shadow-lg);
+  }
+
+  /* ── Decorative film grain for dark hero surfaces ─────────────────── */
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+  }
+
+  /* ── Shimmering skeleton ──────────────────────────────────────────── */
+  .skeleton {
+    @apply relative overflow-hidden rounded-md bg-surface-sunken;
+  }
+
+  .skeleton::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: var(--gradient-shimmer);
+    animation: shimmer 1.8s infinite;
+  }
+
+  /* ── Link with animated gold underline ───────────────────────────── */
+  .link-underline {
+    @apply relative inline-flex items-center gap-1.5 text-heading no-underline;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    transition: background-size 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .link-underline:hover {
+    background-size: 100% 1px;
+  }
+
+  /* ── Numeric tabular alignment in dashboards ─────────────────────── */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+  }
+
+  /* ── Premium image treatment ──────────────────────────────────────── */
+  .img-duotone {
+    filter: saturate(0.94) contrast(1.02);
+    transition: filter 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .group:hover .img-duotone {
+    filter: saturate(1.04) contrast(1.03);
+  }
+
+  /* ── Admin/console chrome density ─────────────────────────────────── */
+  .console-grid {
+    background-image:
+      linear-gradient(to right, hsl(var(--line) / 0.45) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--line) / 0.45) 1px, transparent 1px);
+    background-size: 72px 72px;
+  }
+}
+
+/* ───────────────────────────── UTILITIES ───────────────────────────────── */
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .mask-fade-r {
+    mask-image: linear-gradient(to right, black 82%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, black 82%, transparent 100%);
+  }
+
+  .mask-fade-b {
+    mask-image: linear-gradient(to bottom, black 72%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 72%, transparent 100%);
+  }
+
+  .mask-fade-x {
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 8%,
+      black 92%,
+      transparent
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 8%,
+      black 92%,
+      transparent
+    );
+  }
+
+  .perspective {
+    perspective: 1200px;
+  }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+
+  /* Reserve space for async media to prevent layout shift */
+  .aspect-media {
+    aspect-ratio: 16 / 9;
+  }
+
+  .aspect-card {
+    aspect-ratio: 4 / 3;
+  }
+
+  .aspect-portrait {
+    aspect-ratio: 3 / 4;
+  }
+
+  .aspect-tile {
+    aspect-ratio: 5 / 7;
+  }
+
+  .aspect-hero {
+    aspect-ratio: 21 / 9;
+  }
+
+  /* Explicit grid helpers (12-column system) */
+  .grid-12 {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 2rem;
+  }
+
+  .col-span-4-of-12 {
+    grid-column: span 4 / span 4;
+  }
+
+  .stack-divide > * + * {
+    border-top: 1px solid hsl(var(--line));
+  }
+}
+
+/* ─────────────────────── REDUCED MOTION ──────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .skeleton::after {
+    animation: none !important;
+  }
+}
+
+/* ───────────────────────────── PRINT ──────────────────────────────────── */
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  .print-break {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  @page {
+    margin: 16mm;
+  }
+}
