@@ -1,0 +1,13 @@
+.env
+.env.local
+.env.*.local
+.vercel
+.next
+node_modules
+prisma/dev.db
+prisma/dev.db-journal
+prisma/schema.dev.prisma
+prisma/schema.prod.prisma
+public/uploads
+*.tsbuildinfo
+tsconfig.tsbuildinfo
